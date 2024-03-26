@@ -1,40 +1,44 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define MAX_LINE_LEN 2200
+#include"getBDD.h"
 
-int main(){
-	char bdd[2309][6];
-	FILE* fichier=NULL;
-	fichier=fopen("ressource/bdd_wordle.txt","r");
-	//2200 characters, longest line
+void generateBDD(char* input_file_name, char* output_file_name){
+	FILE* file=NULL;
+	FILE* output_file=NULL;
+	output_file=fopen(output_file_name,"w");
 	char line[MAX_LINE_LEN];
-	char tok[MAX_LINE_LEN];
-	char str[]="Wordle Words List Starting With A\n";
-
+	char tmpWord[6];
 		for(char letter='A';letter<='Z';letter++)
 		{
 			char str[35];
 			sprintf(str,"Wordle Words List Starting With %c\n",letter);
-			printf("%s\n",str);
-			fichier=fopen("ressource/bdd_wordle.txt","r");
-			if(fichier!=NULL)
+			file=fopen(input_file_name,"r");
+			while(fgets(line, MAX_LINE_LEN,file)!=NULL)
 			{
-				while(fgets(line, MAX_LINE_LEN,fichier)!=NULL)
+				if(!strcmp(str, line))
 				{
-					if(!strcmp(line,str))
+					fgets(line, MAX_LINE_LEN,file);
+					fgets(line, MAX_LINE_LEN,file);
+
+					char* token=strtok(line," ");
+
+					while(token!=NULL)
 					{
-						printf("found A");
-						fgets(line, MAX_LINE_LEN,fichier);
-						fgets(line, MAX_LINE_LEN,fichier);
-						printf("%s",line);
+						if(strcmp(token,"\n"))
+						{
+							if(output_file!=NULL)
+								fprintf(output_file,"%s\n",token);
+							else
+								printf("no output file");
+						}
+						token=strtok(NULL," ");
 					}
 				}
-				fclose(fichier);
 			}
-			else
-			{
-				printf("file not opened\n");
-			}
-	}
+			fclose(file);
+
+		}
+			fclose(output_file);
 }
+
