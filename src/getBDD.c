@@ -70,6 +70,41 @@ void getWord(char* bddName, char words[TOTAL_WORDS][MAX_WORD_LENGTH]){
     }
 }
 
+int checkValidWord(char* word, char words[TOTAL_WORDS][MAX_WORD_LENGTH]){
+	for(int i=0;i<TOTAL_WORDS;i++)
+	{
+		if(!strcmp(word,words[i]))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void checkLetters(char* word,char* guess, char* try)
+{
+	//sprintf("%s\n",word );
+	for(int i=0;i<MAX_WORD_LENGTH-1;i++)
+	{
+		for (int j = 0; j < MAX_WORD_LENGTH-1; j++)
+		{
+			if(guess[i]==word[j])
+			{
+				try[i]='o';
+				//printf("%s\n",try);
+			}
+		}
+	}
+	for(int i=0;i<MAX_WORD_LENGTH-1;i++)
+	{
+		if(word[i]==guess[i])
+			try[i]='v';
+	}/*
+
+	printf("%s\n",word);
+	printf("%s\n",guess);
+	printf("%s\n",try);*/
+}
 
 
 
