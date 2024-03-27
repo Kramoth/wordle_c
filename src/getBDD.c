@@ -7,6 +7,7 @@
 void generateBDD(char* input_file_name, char* output_file_name){
 	FILE* file=NULL;
 	FILE* output_file=NULL;
+	file=fopen(input_file_name,"r");
 	output_file=fopen(output_file_name,"w");
 	char line[MAX_LINE_LEN];
 	char tmpWord[6];
@@ -14,7 +15,6 @@ void generateBDD(char* input_file_name, char* output_file_name){
 		{
 			char str[35];
 			sprintf(str,"Wordle Words List Starting With %c\n",letter);
-			file=fopen(input_file_name,"r");
 			while(fgets(line, MAX_LINE_LEN,file)!=NULL)
 			{
 				if(!strcmp(str, line))
@@ -37,10 +37,11 @@ void generateBDD(char* input_file_name, char* output_file_name){
 					}
 				}
 			}
-			fclose(file);
-
+			
+			rewind(file);
 		}
-			fclose(output_file);
+		fclose(file);
+		fclose(output_file);
 }
 
 void getWord(char* bddName, char words[TOTAL_WORDS][MAX_WORD_LENGTH]){
@@ -83,27 +84,32 @@ int checkValidWord(char* word, char words[TOTAL_WORDS][MAX_WORD_LENGTH]){
 
 void checkLetters(char* word,char* guess, char* try)
 {
-	//sprintf("%s\n",word );
-	for(int i=0;i<MAX_WORD_LENGTH-1;i++)
-	{
-		for (int j = 0; j < MAX_WORD_LENGTH-1; j++)
-		{
-			if(guess[i]==word[j])
-			{
-				try[i]='o';
-				//printf("%s\n",try);
-			}
-		}
-	}
+	int wordCount[26] = {0}; 
+    int guessCount[26] = {0};
+
+    for (int i = 0; i < MAX_WORD_LENGTH - 1; i++) {
+        wordCount[word[i] - 'a']++;
+        guessCount[guess[i] - 'a']++;
+    }
 	for(int i=0;i<MAX_WORD_LENGTH-1;i++)
 	{
 		if(word[i]==guess[i])
+		{
 			try[i]='v';
-	}/*
-
-	printf("%s\n",word);
-	printf("%s\n",guess);
-	printf("%s\n",try);*/
+			wordCount[word[i] - 'a']--; 
+            guessCount[guess[i] - 'a']--; 
+		}
+	}
+	for (int i = 0; i < MAX_WORD_LENGTH - 1; i++) 
+	{
+        if (try[i] != 'v') { 
+            if (wordCount[guess[i] - 'a'] > 0) 
+            { 
+                try[i] = 'o';
+                wordCount[guess[i] - 'a']--;
+            }
+        }
+    }
 }
 
 
