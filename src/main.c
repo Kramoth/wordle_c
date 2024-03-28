@@ -43,7 +43,9 @@ int main()
 			}
 			char try[]="xxxxx";
 			checkLetters(listeMots[randomIndex],guess,try);
-			printf("%s\n",try);
+			//printf("%s\n",try);
+			printf("--------------------------\n");
+			displayColorLetter(guess,try);
 			printf("--------------------------\n");
 			if(!strcmp(try,"vvvvv"))
 			{

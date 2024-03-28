@@ -4,6 +4,33 @@
 #include<time.h>
 #include"getBDD.h"
 
+
+void displayColorLetter(char* word, char* try)
+{
+	for(int i=0;i<MAX_WORD_LENGTH-1;i++)
+	{
+		if(try[i]=='v')
+		{
+			printf("\e[0;32m");
+			printf("%c ",word[i]);
+		}
+		else if(try[i]=='o')
+		{
+			printf("\e[0;33m");
+			printf("%c ",word[i]);
+		}
+		else
+		{
+			printf("\e[0m");
+			printf("%c ",word[i]);
+		}
+	}
+	printf("\e[0m");
+	printf("\n");
+}
+
+
+
 void generateBDD(char* input_file_name, char* output_file_name){
 	FILE* file=NULL;
 	FILE* output_file=NULL;
