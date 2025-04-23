@@ -18,7 +18,8 @@ int main()
 
 
 		randomIndex=rand()%2310;
-		printf("%s\n",listeMots[randomIndex]);
+		//for debug
+		//printf("%s\n",listeMots[randomIndex]);
 
 		char guess[6];
 
