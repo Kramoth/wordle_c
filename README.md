@@ -20,8 +20,8 @@ gcc -o bin/main -I include/ src/getBDD.c src/main.c
 ### Utilisation
 
 ```sh
-cd ~/Documents/wordle_c/bin
-./main
+cd ~/Documents/wordle_c
+bin/main
 ```
 
 Suivre les instructions du jeu, taper un mot de 5 lettres puis taper sur la touche entree. Si la lettre est verte alors elle est bien placee si elle est orange alors la lettre est dans le mot mais mal positionnee sinon la lettre n'est pas dans le mot.
